@@ -101,7 +101,7 @@ Interactive menu system with:
 - Drinks (Fresh Juice, Iced Tea, Smoothies, Hot Chocolate, Frappe)
 - Desserts (Cakes, Cookies, Brownies, Pastries)
 
-![Menu Items](https://raw.githubusercontent.com/Ismail2830/coffee-shop/master/public/images/joe-hepburn-EcWFOYOpkpY-unsplash.jpg)
+![Menu Items](https://raw.githubusercontent.com/Ismail2830/coffee-shop/master/public/images/menu.png)
 
 ---
 
