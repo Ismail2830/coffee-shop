@@ -114,21 +114,8 @@ Dynamic route for individual menu items:
 - **Add to Cart** - Shopping functionality (UI ready)
 - **Related Products** - Suggestions for similar items
 
-![Product Detail](https://raw.githubusercontent.com/Ismail2830/coffee-shop/master/public/images/nicolas-horn-78bxxGctJtQ-unsplash.jpg)
+![Product Detail](https://raw.githubusercontent.com/Ismail2830/coffee-shop/master/public/images/product-detail.png)
 
----
-
-### 🛍️ Products Page (`app/products/page.tsx`)
-E-commerce style product catalog: 
-- **Category Tabs** - All, Beans, Equipment, Merchandise, Gift Sets
-- **Product Grid** - Responsive layout with product cards
-- **Product Information:**
-  - Coffee Beans (House Blend, Dark Roast, Single Origin)
-  - Equipment (French Press, Pour Over Kit, Espresso Machine)
-  - Merchandise (T-Shirts, Ceramic Mugs, Tote Bags)
-  - Gift Sets (Coffee Lover's Set, Barista Starter Pack, Premium Collection)
-
-![Products Showcase](https://raw.githubusercontent.com/Ismail2830/coffee-shop/master/public/images/nathan-dumlao-6VhPY27jdps-unsplash.jpg)
 
 ---
 
@@ -139,7 +126,7 @@ Limited-time offers and promotions:
 - **Countdown Timers** - Time-limited promotions
 - **Dynamic Product Display** - Auto-rotating specials from full product catalog
 
-![Special Offers](https://raw.githubusercontent.com/Ismail2830/coffee-shop/master/public/images/kobby-mendez-iyM-XTsTiek-unsplash.jpg)
+![Special Offers](https://raw.githubusercontent.com/Ismail2830/coffee-shop/master/public/images/special.png)
 
 ---
 
@@ -169,7 +156,7 @@ Company story and team:
   - Michael - Coffee Sommelier
   - Emma - Pastry Chef
 
-![About Team](https://raw.githubusercontent.com/Ismail2830/coffee-shop/master/public/images/avatar1.jpg)
+![About Team](https://raw.githubusercontent.com/Ismail2830/coffee-shop/master/public/images/about.png)
 
 ---
 
@@ -251,7 +238,7 @@ bun dev
 ```
 
 4. **Open your browser**
-Navigate to [http://localhost:3000](http://localhost:3000) to see the application.
+Navigate to [http://localhost:3000]([http://localhost:3000](https://coffee-shop-seven-alpha.vercel.app/)) to see the application.
 
 ### Development
 
