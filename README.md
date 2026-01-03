@@ -2,7 +2,7 @@
 
 A modern, fully responsive coffee shop website built with Next. JS 16, React 19, TypeScript, Tailwind CSS, and Framer Motion animations.
 
-![Coffee Shop Project](https://github.com/Ismail2830/coffee-shop/blob/master/public/images/hero-section.png)
+![Coffee Shop Project](https://github.com/Ismail2830/coffee-shop/blob/master/public/images/fullscreen.png)
 
 ## 📋 Table of Contents
 
@@ -84,7 +84,7 @@ The main landing page featuring:
 - **Newsletter Signup** - Email subscription form
 - **Footer** - Contact information and links
 
-![Homepage Example](https://raw.githubusercontent.com/Ismail2830/coffee-shop/master/public/images/american-heritage-chocolate-DoK5qEy2L60-unsplash.jpg)
+![Homepage Example](https://raw.githubusercontent.com/Ismail2830/coffee-shop/master/public/images/hero-section.png)
 
 ---
 
