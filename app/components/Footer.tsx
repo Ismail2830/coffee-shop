@@ -40,7 +40,7 @@ export default function Footer() {
               href="mailto:Caffeine@Gmail.Com"
               className="block text-gray-400 hover:text-[#d4a574] transition-colors"
             >
-              CoffeeIsmail@Gmail.Com
+              contact@CoffeeIsmail.com
             </motion.a>
             <motion.a
               whileHover={{ x: 5, color: '#d4a574' }}
