@@ -2,58 +2,70 @@
 
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
-const menuCategories = [
-  { id: 'coffee', name: 'Coffee', icon: '☕' },
-  { id: 'food', name: 'Food', icon: '🍰' },
-  { id: 'drinks', name: 'Drinks', icon: '🥤' },
-  { id: 'desserts', name: 'Desserts', icon: '🍮' },
-];
+interface Category {
+  id: string;
+  name: string;
+  _count?: {
+    products: number;
+  };
+}
 
-const menuItems = {
-  coffee: [
-    { id: 'espresso', name: 'Espresso', price: '8 DH', description: 'Rich and bold shot of pure coffee' },
-    { id: 'cappuccino', name: 'Cappuccino', price: '10 DH', description: 'Espresso with steamed milk and foam' },
-    { id: 'latte', name: 'Latte', price: '12 DH', description: 'Smooth espresso with steamed milk' },
-    { id: 'americano', name: 'Americano', price: '9 DH', description: 'Espresso with hot water' },
-    { id: 'mocha', name: 'Mocha', price: '14 DH', description: 'Chocolate espresso with steamed milk' },
-    { id: 'macchiato', name: 'Macchiato', price: '11 DH', description: 'Espresso with a dash of milk' },
-  ],
-  food: [
-    { id: 'croissant', name: 'Croissant', price: '3.50 DH', description: 'Buttery, flaky French pastry' },
-    { id: 'bagel', name: 'Bagel & Cream Cheese', price: '4 DH', description: 'Fresh bagel with creamy spread' },
-    { id: 'avocado-toast', name: 'Avocado Toast', price: '7.50 DH', description: 'Smashed avocado on sourdough' },
-    { id: 'breakfast-sandwich', name: 'Breakfast Sandwich', price: '6.50 DH', description: 'Egg, cheese, and bacon' },
-    { id: 'quiche', name: 'Quiche', price: '5.50 DH', description: 'Savory egg and cheese pie' },
-    { id: 'muffin', name: 'Muffin', price: '3 DH', description: 'Fresh baked daily' },
-  ],
-  drinks: [
-    { id: 'orange-juice', name: 'Fresh Orange Juice', price: '4.50 DH', description: 'Freshly squeezed oranges' },
-    { id: 'iced-tea', name: 'Iced Tea', price: '3.50 DH', description: 'Refreshing cold brewed tea' },
-    { id: 'smoothie', name: 'Smoothie', price: '6.00 DH', description: 'Fresh fruit blend' },
-    { id: 'hot-chocolate', name: 'Hot Chocolate', price: '4 DH', description: 'Rich and creamy chocolate' },
-    { id: 'frappe', name: 'Frappe', price: '5.50 DH', description: 'Blended iced coffee' },
-    { id: 'matcha-latte', name: 'Matcha Latte', price: '5.25 DH', description: 'Premium green tea latte' },
-  ],
-  desserts: [
-    { id: 'chocolate-cake', name: 'Chocolate Cake', price: '5.50 DH', description: 'Rich chocolate layers' },
-    { id: 'cheesecake', name: 'Cheesecake', price: '6.00 DH', description: 'Creamy New York style' },
-    { id: 'brownie', name: 'Brownie', price: '4 DH', description: 'Fudgy chocolate brownie' },
-    { id: 'tiramisu', name: 'Tiramisu', price: '6.50 DH', description: 'Italian coffee-flavored dessert' },
-    { id: 'apple-pie', name: 'Apple Pie', price: '5 DH', description: 'Classic American pie' },
-    { id: 'cookie', name: 'Cookie', price: '2.50 DH', description: 'Freshly baked daily' },
-  ],
-};
+interface Product {
+  id: string;
+  name: string;
+  description: string | null;
+  price: number;
+  categoryId: string;
+  category: Category;
+  images: { id: string; url: string }[];
+}
 
 export default function MenuPage() {
-  const [activeCategory, setActiveCategory] = useState('coffee');
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [activeCategory, setActiveCategory] = useState<string>('');
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.1 });
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      
+      // Fetch categories
+      const categoriesRes = await fetch('/api/categories');
+      const categoriesData = await categoriesRes.json();
+      setCategories(categoriesData);
+      
+      // Set first category as active
+      if (categoriesData.length > 0) {
+        setActiveCategory(categoriesData[0].id);
+      }
+      
+      // Fetch all products
+      const productsRes = await fetch('/api/products');
+      const productsData = await productsRes.json();
+      setProducts(productsData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const filteredProducts = products.filter(
+    (product) => product.categoryId === activeCategory
+  );
 
   return (
     <div className="min-h-screen bg-[#e8dcc8]">
@@ -92,59 +104,78 @@ export default function MenuPage() {
             transition={{ duration: 0.6 }}
             className="flex flex-wrap justify-center gap-4 mb-16"
           >
-            {menuCategories.map((category, index) => (
-              <motion.button
-                key={category.id}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-                whileHover={{ scale: 1.05, y: -5 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setActiveCategory(category.id)}
-                className={`px-8 py-4 rounded-lg font-semibold transition-all ${
-                  activeCategory === category.id
-                    ? 'bg-[#1a0f0a] text-white shadow-xl'
-                    : 'bg-white text-[#1a0f0a] hover:bg-[#d4a574] hover:text-white'
-                }`}
-              >
-                <span className="text-2xl mr-2">{category.icon}</span>
-                {category.name}
-              </motion.button>
-            ))}
+            {loading ? (
+              <p className="text-gray-600">Loading categories...</p>
+            ) : (
+              categories.map((category, index) => (
+                <motion.button
+                  key={category.id}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setActiveCategory(category.id)}
+                  className={`px-8 py-4 rounded-lg font-semibold transition-all ${
+                    activeCategory === category.id
+                      ? 'bg-[#1a0f0a] text-white shadow-xl'
+                      : 'bg-white text-[#1a0f0a] hover:bg-[#d4a574] hover:text-white'
+                  }`}
+                >
+                  {category.name}
+                  {category._count && category._count.products > 0 && (
+                    <span className="ml-2 text-sm opacity-70">({category._count.products})</span>
+                  )}
+                </motion.button>
+              ))
+            )}
           </motion.div>
 
           {/* Menu Items Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {menuItems[activeCategory as keyof typeof menuItems].map((item, index) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -10, boxShadow: '0 20px 40px rgba(0,0,0,0.2)' }}
-                className="bg-white rounded-lg p-6 shadow-lg cursor-pointer"
-                onClick={() => router.push(`/menu/${item.id}`)}
-              >
-                <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-2xl font-bold text-[#1a0f0a]" style={{ fontFamily: 'Georgia, serif' }}>
-                    {item.name}
-                  </h3>
-                  <span className="text-xl font-bold text-[#d4a574]">{item.price}</span>
-                </div>
-                <p className="text-gray-600 mb-4">{item.description}</p>
-                <motion.button
-                  whileHover={{ scale: 1.05, backgroundColor: '#1a0f0a' }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    router.push(`/menu/${item.id}`);
-                  }}
-                  className="w-full py-2 bg-[#2d1810] text-white rounded-md font-semibold hover:shadow-lg transition-all"
+            {loading ? (
+              <p className="col-span-full text-center text-gray-600">Loading products...</p>
+            ) : filteredProducts.length === 0 ? (
+              <p className="col-span-full text-center text-gray-600">No products available in this category.</p>
+            ) : (
+              filteredProducts.map((item, index) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileHover={{ y: -10, boxShadow: '0 20px 40px rgba(0,0,0,0.2)' }}
+                  className="bg-white rounded-lg p-6 shadow-lg cursor-pointer"
+                  onClick={() => router.push(`/menu/${item.id}`)}
                 >
-                  Add to Order
-                </motion.button>
-              </motion.div>
-            ))}
+                  {item.images.length > 0 && (
+                    <img
+                      src={item.images[0].url}
+                      alt={item.name}
+                      className="w-full h-48 object-cover rounded-lg mb-4"
+                    />
+                  )}
+                  <div className="flex justify-between items-start mb-3">
+                    <h3 className="text-2xl font-bold text-[#1a0f0a]" style={{ fontFamily: 'Georgia, serif' }}>
+                      {item.name}
+                    </h3>
+                    <span className="text-xl font-bold text-[#d4a574]">{item.price} DH</span>
+                  </div>
+                  <p className="text-gray-600 mb-4">{item.description || 'No description available'}</p>
+                  <motion.button
+                    whileHover={{ scale: 1.05, backgroundColor: '#1a0f0a' }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      router.push(`/menu/${item.id}`);
+                    }}
+                    className="w-full py-2 bg-[#2d1810] text-white rounded-md font-semibold hover:shadow-lg transition-all"
+                  >
+                    Order
+                  </motion.button>
+                </motion.div>
+              ))
+            )}
           </div>
         </div>
       </section>

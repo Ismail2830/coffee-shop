@@ -149,7 +149,7 @@ export default function CartPage() {
                   >
                     <div className="flex flex-col sm:flex-row gap-4 p-4">
                       {/* Product Image */}
-                      <div className="relative w-full sm:w-32 h-32 rounded-lg overflow-hidden flex-shrink-0">
+                      <div className="relative w-full sm:w-32 h-32 rounded-lg overflow-hidden shrink-0">
                         <Image
                           src={item.image}
                           alt={item.name}
