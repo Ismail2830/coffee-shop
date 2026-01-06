@@ -7,10 +7,16 @@ const globalForPrisma = globalThis as unknown as {
   pool: pg.Pool | undefined
 }
 
-const connectionString = process.env.DATABASE_URL!
+// Remove channel_binding parameter for adapter compatibility
+const connectionString = process.env.DATABASE_URL?.replace('&channel_binding=require', '') || process.env.DATABASE_URL!
 
 if (!globalForPrisma.pool) {
-  globalForPrisma.pool = new pg.Pool({ connectionString })
+  globalForPrisma.pool = new pg.Pool({ 
+    connectionString,
+    max: 10,
+    idleTimeoutMillis: 30000,
+    connectionTimeoutMillis: 10000,
+  })
 }
 
 const adapter = new PrismaPg(globalForPrisma.pool)
@@ -19,7 +25,7 @@ export const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({ 
     adapter,
-    log: ['error', 'warn'],
+    log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
   })
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
