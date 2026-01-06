@@ -8,6 +8,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [location, setLocation] = useState<string>('');
   const [visitCount, setVisitCount] = useState<number>(0);
+  const [cartItems, setCartItems] = useState<number>(0);
 
   // Function to get user location
   useEffect(() => {
@@ -99,6 +100,46 @@ export default function Navbar() {
     trackVisits();
   }, []);
 
+  // Load cart items from localStorage
+  useEffect(() => {
+    const loadCartItems = () => {
+      const cart = localStorage.getItem('cart');
+      if (cart) {
+        try {
+          const cartData = JSON.parse(cart);
+          const totalItems = Array.isArray(cartData) ? cartData.reduce((sum, item) => sum + (item.quantity || 1), 0) : 0;
+          setCartItems(totalItems);
+        } catch (error) {
+          console.error('Error parsing cart data:', error);
+          setCartItems(0);
+        }
+      }
+    };
+
+    loadCartItems();
+
+    // Listen for storage changes (cart updates)
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'cart') {
+        loadCartItems();
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Custom event for same-page cart updates
+    const handleCartUpdate = () => {
+      loadCartItems();
+    };
+    
+    window.addEventListener('cartUpdated', handleCartUpdate);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('cartUpdated', handleCartUpdate);
+    };
+  }, []);
+
   return (
     <motion.nav 
       initial={{ y: -100, opacity: 0 }}
@@ -157,6 +198,27 @@ export default function Navbar() {
               </svg>
               <span>Visits: {visitCount}</span>
             </div>
+
+            {/* Shopping Cart */}
+            <Link href="/cart">
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                className="relative cursor-pointer"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white hover:text-[#d4a574] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                {cartItems > 0 && (
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="absolute -top-2 -right-2 bg-[#d4a574] text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center"
+                  >
+                    {cartItems}
+                  </motion.span>
+                )}
+              </motion.div>
+            </Link>
           </div>
 
         
@@ -218,6 +280,16 @@ export default function Navbar() {
               </svg>
               <span>Visits: {visitCount}</span>
             </div>
+
+            {/* Mobile Shopping Cart */}
+            <Link href="/cart" onClick={() => setIsOpen(false)}>
+              <div className="flex items-center gap-2 text-[#d4a574] text-sm pt-2 border-t border-[#d4a574]/30">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                <span>Shopping Cart ({cartItems})</span>
+              </div>
+            </Link>
           </div>
         </motion.div>
       </div>

@@ -71,8 +71,39 @@ export default function ProductPage() {
     .slice(0, 3);
 
   const handleAddToOrder = () => {
-    console.log(`Added ${quantity} ${product.name} to order`);
-    // Add to cart logic here
+    // Get existing cart from localStorage
+    const existingCart = localStorage.getItem('cart');
+    let cart = existingCart ? JSON.parse(existingCart) : [];
+
+    // Check if product already exists in cart
+    const existingItemIndex = cart.findIndex((item: any) => item.id === product.id);
+
+    if (existingItemIndex !== -1) {
+      // Update quantity if product exists
+      cart[existingItemIndex].quantity += quantity;
+    } else {
+      // Add new product to cart
+      cart.push({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        quantity: quantity,
+        category: product.category
+      });
+    }
+
+    // Save to localStorage
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    // Dispatch custom event to update navbar cart count
+    window.dispatchEvent(new Event('cartUpdated'));
+
+    // Show success feedback
+    alert(`Added ${quantity} ${product.name} to cart!`);
+    
+    // Reset quantity
+    setQuantity(1);
   };
 
   return (

@@ -60,7 +60,7 @@ export default function OpeningHoursPage() {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-12 bg-gradient-to-br from-[#1a0f0a] via-[#2d1810] to-[#1a0f0a]">
+      <section className="pt-32 pb-12 bg-linear-to-br from-[#1a0f0a] via-[#2d1810] to-[#1a0f0a]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -100,7 +100,7 @@ export default function OpeningHoursPage() {
             className="bg-white rounded-2xl shadow-2xl overflow-hidden"
           >
             {/* Table Header */}
-            <div className="bg-gradient-to-r from-[#1a0f0a] to-[#2d1810] p-6">
+            <div className="bg-linear-to-r from-[#1a0f0a] to-[#2d1810] p-6">
               <h2 className="text-3xl font-bold text-white text-center" style={{ fontFamily: 'Georgia, serif' }}>
                 Weekly Schedule
               </h2>
