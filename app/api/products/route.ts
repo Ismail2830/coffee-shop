@@ -34,11 +34,24 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { name, description, price, categoryId, imageUrls } = body;
 
+    console.log('Creating product:', { name, price, categoryId, imageCount: imageUrls?.length });
+
     if (!name || !price || !categoryId) {
       return NextResponse.json(
         { error: 'Name, price, and category are required' },
         { status: 400 }
       );
+    }
+
+    // Check if imageUrls are too large (base64 images)
+    if (imageUrls && imageUrls.length > 0) {
+      const totalSize = imageUrls.join('').length;
+      if (totalSize > 3000000) { // ~3MB limit for base64
+        return NextResponse.json(
+          { error: 'Images are too large. Please use smaller images or fewer images.' },
+          { status: 413 }
+        );
+      }
     }
 
     // Verify category exists
@@ -69,11 +82,13 @@ export async function POST(request: NextRequest) {
       }
     });
 
+    console.log('Product created successfully:', product.id);
+
     return NextResponse.json(product, { status: 201 });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error creating product:', error);
     return NextResponse.json(
-      { error: 'Failed to create product' },
+      { error: 'Failed to create product', details: error.message },
       { status: 500 }
     );
   }

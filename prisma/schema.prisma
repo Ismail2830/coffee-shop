@@ -23,15 +23,16 @@ model Category {
 
 // Product model
 model Product {
-  id          String   @id @default(cuid())
+  id          String      @id @default(cuid())
   name        String
   description String?
   price       Float
   categoryId  String
-  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  category    Category    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   images      Image[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  orderItems  OrderItem[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 
   @@index([categoryId])
 }
@@ -54,12 +55,51 @@ model User {
   name      String?
   password  String
   role      Role     @default(USER)
+  orders    Order[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+// Order model
+model Order {
+  id          String      @id @default(cuid())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orderItems  OrderItem[]
+  totalAmount Float
+  status      OrderStatus @default(PENDING)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([userId])
+}
+
+// OrderItem junction table for Order-Product many-to-many relationship
+model OrderItem {
+  id        String   @id @default(cuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity  Int
+  price     Float    // Store the price at time of order
+  createdAt DateTime @default(now())
+
+  @@index([orderId])
+  @@index([productId])
+  @@unique([orderId, productId]) // Prevent duplicate products in same order
 }
 
 // Enum for user roles
 enum Role {
   USER
   ADMIN
+}
+
+// Enum for order status
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  CANCELLED
 }

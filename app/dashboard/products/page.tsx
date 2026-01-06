@@ -80,6 +80,14 @@ export default function ProductsPage() {
     const files = e.target.files;
     if (files && files.length > 0) {
       const fileArray = Array.from(files);
+      
+      // Check file sizes
+      const oversizedFiles = fileArray.filter(file => file.size > 500000); // 500KB limit
+      if (oversizedFiles.length > 0) {
+        setError('Please use smaller images (max 500KB each) to avoid upload issues.');
+        return;
+      }
+      
       setNewProduct({ ...newProduct, images: fileArray });
       
       // Create previews for all selected images

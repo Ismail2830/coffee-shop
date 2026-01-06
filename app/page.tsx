@@ -1,11 +1,28 @@
+import dynamic from 'next/dynamic';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
-import CoffeeHeavenSection from './components/CoffeeHeavenSection';
-import JeansCoffeeSection from './components/JeansCoffeeSection';
-import BestSellingSection from './components/BestSellingSection';
-import TestimonialsSection from './components/TestimonialsSection';
-import NewsletterSection from './components/NewsletterSection';
 import Footer from './components/Footer';
+
+// Lazy load heavy components
+const CoffeeHeavenSection = dynamic(() => import('./components/CoffeeHeavenSection'), {
+  loading: () => <div className="h-96 bg-[#e8dcc8]"></div>
+});
+
+const JeansCoffeeSection = dynamic(() => import('./components/JeansCoffeeSection'), {
+  loading: () => <div className="h-96 bg-[#e8dcc8]"></div>
+});
+
+const BestSellingSection = dynamic(() => import('./components/BestSellingSection'), {
+  loading: () => <div className="h-96 bg-[#c9a981]"></div>
+});
+
+const TestimonialsSection = dynamic(() => import('./components/TestimonialsSection'), {
+  loading: () => <div className="h-96 bg-[#e8dcc8]"></div>
+});
+
+const NewsletterSection = dynamic(() => import('./components/NewsletterSection'), {
+  loading: () => <div className="h-64 bg-[#c9a981]"></div>
+});
 
 export default function Home() {
   return (
