@@ -13,8 +13,9 @@ export default function NewsletterSection() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle newsletter signup
-    console.log('Newsletter signup:', email);
+    // TODO: Implement newsletter API integration
     setEmail('');
+    alert('Thank you for subscribing!');
   };
 
   return (

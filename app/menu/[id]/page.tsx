@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 interface Product {
   id: string;
@@ -24,7 +24,7 @@ export default function ProductPage() {
   const params = useParams();
   const router = useRouter();
   const [quantity, setQuantity] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   // Dummy products data
   const allProducts: Product[] = [
@@ -186,19 +186,6 @@ export default function ProductPage() {
     ? allProducts.filter(p => p.categoryId === product.categoryId && p.id !== product.id).slice(0, 3)
     : [];
   
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[#e8dcc8]">
-        <Navbar />
-        <div className="pt-32 flex items-center justify-center min-h-[60vh]">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold text-[#1a0f0a]">Loading...</h1>
-          </div>
-        </div>
-      </div>
-    );
-  }
-  
   if (!product) {
     return (
       <div className="min-h-screen bg-[#e8dcc8]">
@@ -247,16 +234,45 @@ export default function ProductPage() {
     // Dispatch custom event to update navbar cart count
     window.dispatchEvent(new Event('cartUpdated'));
 
-    // Show success feedback
-    alert(`Added ${quantity} ${product.name} to cart!`);
+    // Show success toast
+    setShowToast(true);
     
     // Reset quantity
     setQuantity(1);
+    
+    // Hide toast after 10 seconds
+    setTimeout(() => {
+      setShowToast(false);
+    }, 10000);
   };
 
   return (
     <div className="min-h-screen bg-[#e8dcc8]">
       <Navbar />
+      
+      {/* Toast Notification */}
+      {showToast && (
+        <motion.div
+          initial={{ opacity: 0, y: -100 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -100 }}
+          className="fixed top-24 left-1/2 transform -translate-x-1/2 z-50"
+        >
+          <div className="bg-white rounded-2xl shadow-2xl px-8 py-4 flex items-center gap-4 border-2 border-[#d4a574]">
+            <span className="text-4xl">☕</span>
+            <div>
+              <p className="text-lg font-bold text-[#1a0f0a]">Yay! Added to your cart! 🎉</p>
+              <p className="text-sm text-gray-600">{product.name}</p>
+            </div>
+            <button
+              onClick={() => setShowToast(false)}
+              className="ml-4 text-gray-400 hover:text-gray-600 text-2xl font-bold"
+            >
+              ×
+            </button>
+          </div>
+        </motion.div>
+      )}
       
       {/* Product Details Section */}
       <section className="pt-32 pb-16">

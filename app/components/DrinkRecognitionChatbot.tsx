@@ -186,6 +186,11 @@ export default function DrinkRecognitionChatbot() {
   ];
 
   const fetchRecommendations = async (drinkType: 'hot' | 'cold' | 'unknown') => {
+    // If drink type is unknown, return empty array (no recommendations)
+    if (drinkType === 'unknown') {
+      return [];
+    }
+    
     // Simulate async operation
     await new Promise(resolve => setTimeout(resolve, 100));
     
@@ -245,7 +250,6 @@ export default function DrinkRecognitionChatbot() {
         const loadedModel = await mobilenet.load();
         setModel(loadedModel);
         setModelLoading(false);
-        console.log('MobileNet model loaded successfully');
       } catch (error) {
         console.error('Error loading model:', error);
         setModelLoading(false);

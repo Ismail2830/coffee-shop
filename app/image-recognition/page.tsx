@@ -159,7 +159,6 @@ export default function ImageRecognitionPage() {
         const loadedModel = await mobilenet.load();
         setModel(loadedModel);
         setModelLoading(false);
-        console.log('MobileNet model loaded successfully');
       } catch (error) {
         console.error('Error loading model:', error);
         setModelLoading(false);
