@@ -54,7 +54,7 @@ export default function ProductPage() {
       price: 35,
       categoryId: '1',
       category: { id: '1', name: 'Hot Coffee' },
-      images: [{ id: '3', url: '/images/diliara-garifullina-D7X-GMeTV7U-unsplash.jpg' }]
+      images: [{ id: '3', url: '/images/kobe-kian-clata-U68opQoJwgE-unsplash.jpg' }]
     },
     {
       id: '4',
@@ -63,7 +63,7 @@ export default function ProductPage() {
       price: 35,
       categoryId: '1',
       category: { id: '1', name: 'Hot Coffee' },
-      images: [{ id: '4', url: '/images/american-heritage-chocolate-DoK5qEy2L60-unsplash.jpg' }]
+      images: [{ id: '4', url: '/images/alana-harris-C63YZ33DdvY-unsplash.jpg' }]
     },
     // Iced Coffee
     {
@@ -73,7 +73,7 @@ export default function ProductPage() {
       price: 35,
       categoryId: '2',
       category: { id: '2', name: 'Iced Coffee' },
-      images: [{ id: '5', url: '/images/jugoslocos-QD4yCjlD44A-unsplash.jpg' }]
+      images: [{ id: '5', url: '/images/nathan-dumlao-vZOZJH_xkUk-unsplash.jpg' }]
     },
     {
       id: '6',
@@ -82,7 +82,7 @@ export default function ProductPage() {
       price: 30,
       categoryId: '2',
       category: { id: '2', name: 'Iced Coffee' },
-      images: [{ id: '6', url: '/images/umesh-soni-LDnmyOaA-ew-unsplash.jpg' }]
+      images: [{ id: '6', url: '/images/pariwat-pannium-EIyVsrBb_BQ-unsplash.jpg' }]
     },
     {
       id: '7',
@@ -91,7 +91,7 @@ export default function ProductPage() {
       price: 40,
       categoryId: '2',
       category: { id: '2', name: 'Iced Coffee' },
-      images: [{ id: '7', url: '/images/kobby-mendez-iyM-XTsTiek-unsplash.jpg' }]
+      images: [{ id: '7', url: '/images/alana-harris-C63YZ33DdvY-unsplash.jpg' }]
     },
     {
       id: '8',
@@ -100,7 +100,7 @@ export default function ProductPage() {
       price: 35,
       categoryId: '2',
       category: { id: '2', name: 'Iced Coffee' },
-      images: [{ id: '8', url: '/images/gerson-cifuentes-JNhaaPEz3FY-unsplash.jpg' }]
+      images: [{ id: '8', url: '/images/perry-merrity-ii-KDFB3AvmdXQ-unsplash.jpg' }]
     },
     // Food
     {
@@ -110,7 +110,7 @@ export default function ProductPage() {
       price: 20,
       categoryId: '3',
       category: { id: '3', name: 'Food' },
-      images: [{ id: '9', url: '/images/patrick-tomasso-GXXYkSwndP4-unsplash.jpg' }]
+      images: [{ id: '9', url: '/images/kobby-mendez-iyM-XTsTiek-unsplash.jpg' }]
     },
     {
       id: '10',
@@ -119,7 +119,7 @@ export default function ProductPage() {
       price: 35,
       categoryId: '3',
       category: { id: '3', name: 'Food' },
-      images: [{ id: '10', url: '/images/mae-mu-kbch-i63YTg-unsplash.jpg' }]
+      images: [{ id: '10', url: '/images/erwan-nonon-D5vE6tDzB80-unsplash.jpg' }]
     },
     {
       id: '11',
@@ -128,7 +128,7 @@ export default function ProductPage() {
       price: 40,
       categoryId: '3',
       category: { id: '3', name: 'Food' },
-      images: [{ id: '11', url: '/images/inna-safa-BmrXxbVuqTc-unsplash.jpg' }]
+      images: [{ id: '11', url: '/images/saymom-leao-SaWYeuOqEdo-unsplash.jpg' }]
     },
     {
       id: '12',
@@ -137,7 +137,7 @@ export default function ProductPage() {
       price: 45,
       categoryId: '3',
       category: { id: '3', name: 'Food' },
-      images: [{ id: '12', url: '/images/saymom-leao-SaWYeuOqEdo-unsplash.jpg' }]
+      images: [{ id: '12', url: '/images/freddy-g-KEmgWXjxDok-unsplash.jpg' }]
     },
     // Dessert
     {
@@ -147,7 +147,7 @@ export default function ProductPage() {
       price: 30,
       categoryId: '4',
       category: { id: '4', name: 'Dessert' },
-      images: [{ id: '13', url: '/images/american-heritage-chocolate-DoK5qEy2L60-unsplash.jpg' }]
+      images: [{ id: '13', url: '/images/umesh-soni-LDnmyOaA-ew-unsplash.jpg' }]
     },
     {
       id: '14',
@@ -156,7 +156,7 @@ export default function ProductPage() {
       price: 35,
       categoryId: '4',
       category: { id: '4', name: 'Dessert' },
-      images: [{ id: '14', url: '/images/alana-harris-C63YZ33DdvY-unsplash.jpg' }]
+      images: [{ id: '14', url: '/images/kelsey-todd-nXsFPNyBqq4-unsplash.jpg' }]
     },
     {
       id: '15',
@@ -165,7 +165,7 @@ export default function ProductPage() {
       price: 35,
       categoryId: '4',
       category: { id: '4', name: 'Dessert' },
-      images: [{ id: '15', url: '/images/julian-lates-tPggQVZE-VI-unsplash.jpg' }]
+      images: [{ id: '15', url: '/images/inna-safa-BmrXxbVuqTc-unsplash.jpg' }]
     },
     {
       id: '16',
@@ -174,7 +174,7 @@ export default function ProductPage() {
       price: 25,
       categoryId: '4',
       category: { id: '4', name: 'Dessert' },
-      images: [{ id: '16', url: '/images/kobby-mendez-iyM-XTsTiek-unsplash.jpg' }]
+      images: [{ id: '16', url: '/images/anisa-mustafa-yRI0fojBUv8-unsplash.jpg' }]
     }
   ];
 
