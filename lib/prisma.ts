@@ -1,30 +1,12 @@
 import { PrismaClient } from '@prisma/client'
-import { PrismaPg } from '@prisma/adapter-pg'
-import pg from 'pg'
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
-  pool: pg.Pool | undefined
 }
-
-// Remove channel_binding parameter for adapter compatibility
-const connectionString = process.env.DATABASE_URL?.replace('&channel_binding=require', '') || process.env.DATABASE_URL!
-
-if (!globalForPrisma.pool) {
-  globalForPrisma.pool = new pg.Pool({ 
-    connectionString,
-    max: 10,
-    idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 10000,
-  })
-}
-
-const adapter = new PrismaPg(globalForPrisma.pool)
 
 export const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({ 
-    adapter,
     log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
   })
 

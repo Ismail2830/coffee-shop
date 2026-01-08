@@ -26,42 +26,173 @@ interface Product {
 }
 
 export default function MenuPage() {
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [activeCategory, setActiveCategory] = useState<string>('');
-  const [loading, setLoading] = useState(true);
+  // Dummy data for categories
+  const dummyCategories: Category[] = [
+    { id: '1', name: 'Hot Coffee', _count: { products: 4 } },
+    { id: '2', name: 'Iced Coffee', _count: { products: 4 } },
+    { id: '3', name: 'Food', _count: { products: 4 } },
+    { id: '4', name: 'Dessert', _count: { products: 4 } }
+  ];
+
+  // Dummy data for products
+  const dummyProducts: Product[] = [
+    // Hot Coffee
+    {
+      id: '1',
+      name: 'Classic Espresso',
+      description: 'Rich and bold espresso shot made from premium beans',
+      price: 25,
+      categoryId: '1',
+      category: { id: '1', name: 'Hot Coffee' },
+      images: [{ id: '1', url: '/images/nathan-dumlao-6VhPY27jdps-unsplash.jpg' }]
+    },
+    {
+      id: '2',
+      name: 'Cappuccino',
+      description: 'Espresso with steamed milk and velvety foam',
+      price: 30,
+      categoryId: '1',
+      category: { id: '1', name: 'Hot Coffee' },
+      images: [{ id: '2', url: '/images/joe-hepburn-EcWFOYOpkpY-unsplash.jpg' }]
+    },
+    {
+      id: '3',
+      name: 'Caramel Latte',
+      description: 'Smooth latte with rich caramel syrup',
+      price: 35,
+      categoryId: '1',
+      category: { id: '1', name: 'Hot Coffee' },
+      images: [{ id: '3', url: '/images/diliara-garifullina-D7X-GMeTV7U-unsplash.jpg' }]
+    },
+    {
+      id: '4',
+      name: 'Mocha',
+      description: 'Coffee and chocolate combined with steamed milk',
+      price: 35,
+      categoryId: '1',
+      category: { id: '1', name: 'Hot Coffee' },
+      images: [{ id: '4', url: '/images/american-heritage-chocolate-DoK5qEy2L60-unsplash.jpg' }]
+    },
+    // Iced Coffee
+    {
+      id: '5',
+      name: 'Iced Latte',
+      description: 'Chilled espresso with cold milk over ice',
+      price: 35,
+      categoryId: '2',
+      category: { id: '2', name: 'Iced Coffee' },
+      images: [{ id: '5', url: '/images/jugoslocos-QD4yCjlD44A-unsplash.jpg' }]
+    },
+    {
+      id: '6',
+      name: 'Cold Brew',
+      description: 'Smooth cold-brewed coffee, less acidic',
+      price: 30,
+      categoryId: '2',
+      category: { id: '2', name: 'Iced Coffee' },
+      images: [{ id: '6', url: '/images/umesh-soni-LDnmyOaA-ew-unsplash.jpg' }]
+    },
+    {
+      id: '7',
+      name: 'Iced Mocha',
+      description: 'Chocolate and espresso served over ice',
+      price: 40,
+      categoryId: '2',
+      category: { id: '2', name: 'Iced Coffee' },
+      images: [{ id: '7', url: '/images/kobby-mendez-iyM-XTsTiek-unsplash.jpg' }]
+    },
+    {
+      id: '8',
+      name: 'Vanilla Iced Coffee',
+      description: 'Refreshing iced coffee with vanilla flavor',
+      price: 35,
+      categoryId: '2',
+      category: { id: '2', name: 'Iced Coffee' },
+      images: [{ id: '8', url: '/images/gerson-cifuentes-JNhaaPEz3FY-unsplash.jpg' }]
+    },
+    // Food
+    {
+      id: '9',
+      name: 'Croissant',
+      description: 'Buttery and flaky French pastry',
+      price: 20,
+      categoryId: '3',
+      category: { id: '3', name: 'Food' },
+      images: [{ id: '9', url: '/images/patrick-tomasso-GXXYkSwndP4-unsplash.jpg' }]
+    },
+    {
+      id: '10',
+      name: 'Bagel Sandwich',
+      description: 'Toasted bagel with cream cheese and vegetables',
+      price: 35,
+      categoryId: '3',
+      category: { id: '3', name: 'Food' },
+      images: [{ id: '10', url: '/images/mae-mu-kbch-i63YTg-unsplash.jpg' }]
+    },
+    {
+      id: '11',
+      name: 'Avocado Toast',
+      description: 'Fresh avocado on sourdough with olive oil',
+      price: 40,
+      categoryId: '3',
+      category: { id: '3', name: 'Food' },
+      images: [{ id: '11', url: '/images/inna-safa-BmrXxbVuqTc-unsplash.jpg' }]
+    },
+    {
+      id: '12',
+      name: 'Breakfast Wrap',
+      description: 'Eggs, cheese, and vegetables wrapped in tortilla',
+      price: 45,
+      categoryId: '3',
+      category: { id: '3', name: 'Food' },
+      images: [{ id: '12', url: '/images/saymom-leao-SaWYeuOqEdo-unsplash.jpg' }]
+    },
+    // Dessert
+    {
+      id: '13',
+      name: 'Chocolate Cake',
+      description: 'Rich chocolate layer cake with ganache',
+      price: 30,
+      categoryId: '4',
+      category: { id: '4', name: 'Dessert' },
+      images: [{ id: '13', url: '/images/american-heritage-chocolate-DoK5qEy2L60-unsplash.jpg' }]
+    },
+    {
+      id: '14',
+      name: 'Cheesecake',
+      description: 'Creamy New York style cheesecake',
+      price: 35,
+      categoryId: '4',
+      category: { id: '4', name: 'Dessert' },
+      images: [{ id: '14', url: '/images/alana-harris-C63YZ33DdvY-unsplash.jpg' }]
+    },
+    {
+      id: '15',
+      name: 'Tiramisu',
+      description: 'Classic Italian coffee-flavored dessert',
+      price: 35,
+      categoryId: '4',
+      category: { id: '4', name: 'Dessert' },
+      images: [{ id: '15', url: '/images/julian-lates-tPggQVZE-VI-unsplash.jpg' }]
+    },
+    {
+      id: '16',
+      name: 'Brownie',
+      description: 'Fudgy chocolate brownie with walnuts',
+      price: 25,
+      categoryId: '4',
+      category: { id: '4', name: 'Dessert' },
+      images: [{ id: '16', url: '/images/kobby-mendez-iyM-XTsTiek-unsplash.jpg' }]
+    }
+  ];
+
+  const [categories, setCategories] = useState<Category[]>(dummyCategories);
+  const [products, setProducts] = useState<Product[]>(dummyProducts);
+  const [activeCategory, setActiveCategory] = useState<string>('1');
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.1 });
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      
-      // Fetch categories
-      const categoriesRes = await fetch('/api/categories');
-      const categoriesData = await categoriesRes.json();
-      setCategories(categoriesData);
-      
-      // Set first category as active
-      if (categoriesData.length > 0) {
-        setActiveCategory(categoriesData[0].id);
-      }
-      
-      // Fetch all products
-      const productsRes = await fetch('/api/products');
-      const productsData = await productsRes.json();
-      setProducts(productsData);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const filteredProducts = products.filter(
     (product) => product.categoryId === activeCategory

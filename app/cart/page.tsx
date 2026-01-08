@@ -10,7 +10,7 @@ import Footer from '../components/Footer';
 interface CartItem {
   id: string;
   name: string;
-  price: string;
+  price: string | number;
   image: string;
   quantity: number;
   category: string;
@@ -70,9 +70,12 @@ export default function CartPage() {
     }
   };
 
-  // Calculate price from string (e.g., "8 DH" -> 8)
-  const parsePrice = (priceString: string): number => {
-    return parseFloat(priceString.replace(/[^0-9.]/g, ''));
+  // Calculate price from string (e.g., "8 DH" -> 8) or number
+  const parsePrice = (priceString: string | number): number => {
+    if (typeof priceString === 'number') {
+      return priceString;
+    }
+    return parseFloat(priceString.replace(/[^0-9.]/g, '')) || 0;
   };
 
   // Calculate total

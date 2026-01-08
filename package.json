@@ -13,6 +13,8 @@
   "dependencies": {
     "@prisma/adapter-pg": "^7.2.0",
     "@prisma/client": "^7.2.0",
+    "@tensorflow-models/mobilenet": "^2.1.1",
+    "@tensorflow/tfjs": "^4.22.0",
     "framer-motion": "^12.23.26",
     "next": "16.1.1",
     "pg": "^8.16.3",

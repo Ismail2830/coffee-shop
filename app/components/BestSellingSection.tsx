@@ -38,7 +38,7 @@ const products = [
   },
 ];
 
-const categories = ['All', 'Black', 'Espresso', 'Doppio'];
+const categories = ['All', 'Coffee', 'Drinks', 'Food', 'Desserts'];
 
 export default function BestSellingSection() {
   const ref = useRef(null);
@@ -78,7 +78,7 @@ export default function BestSellingSection() {
             Best Selling Item
           </h2>
           <p className="text-gray-700 max-w-2xl mx-auto">
-            Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting Industry. Lorem Ipsum Has Been The Industry's Standard Dummy Text.
+            Discover our most popular coffee creations, expertly crafted from premium beans and loved by coffee enthusiasts. Each cup delivers exceptional flavor, rich aroma, and the perfect balance of strength and smoothness.
           </p>
         </motion.div>
 

@@ -167,6 +167,7 @@ export default function Navbar() {
               { name: 'About Us', path: '/about' },
               { name: 'Opening Hours', path: '/hours' },
               { name: 'Contact', path: '/contact' },
+              { name: 'AI Recognition', path: '/image-recognition' },
             ].map((item, index) => (
               <Link key={item.name} href={item.path}>
                 <motion.div
@@ -252,6 +253,7 @@ export default function Navbar() {
               { name: 'About Us', path: '/about' },
               { name: 'Opening Hours', path: '/hours' },
               { name: 'Contact', path: '/contact' },
+              { name: 'AI Recognition', path: '/image-recognition' },
             ].map((item) => (
               <Link
                 key={item.name}
