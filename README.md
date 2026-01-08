@@ -2,7 +2,7 @@
 
 A modern, fully responsive coffee shop website built with Next. JS 16, React 19, TypeScript, Tailwind CSS, and Framer Motion animations.
 
-![Coffee Shop Project](https://github.com/Ismail2830/coffee-shop/blob/master/public/images/FullScreenproject.png)
+![Coffee Shop Project](https://github.com/Ismail2830/coffee-shop/blob/master/public/images/fullScreenproject.png)
 
 ## 📋 Table of Contents
 
